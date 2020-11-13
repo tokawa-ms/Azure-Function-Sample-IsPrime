@@ -1,12 +1,12 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace IsPrime
@@ -26,7 +26,7 @@ namespace IsPrime
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             number = number ?? data?.number;
 
-            if(number == null)
+            if (number == null)
             {
                 return new BadRequestObjectResult("Please set number param");
             }
@@ -36,12 +36,12 @@ namespace IsPrime
             {
                 long.TryParse(number, out num);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new InternalServerErrorResult();
             }
 
-            if(num > long.MaxValue || num < 0)
+            if (num > long.MaxValue || num < 0)
             {
                 return new BadRequestObjectResult("Request Param Must Be in LongMax > number > 0");
             }
@@ -62,7 +62,7 @@ namespace IsPrime
                 return false;
             }
 
-            for (i = 2 ; i < Math.Sqrt(num); i++)
+            for (i = 2; i < Math.Sqrt(num); i++)
             {
                 if (num % i == 0)
                 {
