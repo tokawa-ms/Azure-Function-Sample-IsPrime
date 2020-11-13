@@ -34,16 +34,18 @@ namespace IsPrime
             long num;
             try
             {
-                long.TryParse(number, out num);
+                if (!long.TryParse(number, out num)){
+                    return new BadRequestObjectResult("Request Param Must Be in LongMax > number > 0");
+                }
+
+                if (num < 0)
+                {
+                    return new BadRequestObjectResult("Request Param Must Be in LongMax > number > 0");
+                }
             }
             catch (Exception ex)
             {
                 return new InternalServerErrorResult();
-            }
-
-            if (num > long.MaxValue || num < 0)
-            {
-                return new BadRequestObjectResult("Request Param Must Be in LongMax > number > 0");
             }
 
             string responseMessage = isPrime(num)
